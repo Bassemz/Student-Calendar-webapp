@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   VStack,
   HStack,
@@ -5,6 +6,18 @@ import {
   IconButton,
   Flex,
   Image,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import CourseSwiper from "./CourseSwiper";
@@ -27,6 +40,10 @@ const monthNames = [
 ];
 
 export default function DashBoardBody() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef();
+  const finalRef = useRef();
+
   const current = new Date();
   const date = `${current.getDate()} ${
     monthNames[current.getMonth()]
@@ -57,7 +74,32 @@ export default function DashBoardBody() {
             size="lg"
             color="white"
             bgColor="#0055d4"
+            onClick={onOpen}
           />
+          <Modal
+            initialFocusRef={initialRef}
+            finalFocusRef={finalRef}
+            isOpen={isOpen}
+            onClose={onClose}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Enter Course Name</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <FormControl>
+                  <FormLabel>Course Name</FormLabel>
+                  <Input ref={initialRef} placeholder="Course Name" />
+                </FormControl>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3}>
+                  Save
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </HStack>
         {/* <CourseCard /> */}
         <CourseSwiper />
