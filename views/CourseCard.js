@@ -1,9 +1,31 @@
-import React from "react";
-import { HStack, VStack, Image, Heading, IconButton } from "@chakra-ui/react";
+import React, { useRef } from "react";
+import {
+  HStack,
+  VStack,
+  Image,
+  Heading,
+  IconButton,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  Stack,
+} from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Progress } from "@chakra-ui/react";
+import CourseTaskList from "./CourseTaskList";
 
-export default function CourseCard({ courseName, courseProgressPercentage }) {
+export default function CourseCard({
+  courseName,
+  courseProgressPercentage,
+  data,
+}) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  let didClickOnIcon = false;
+
   return (
     <HStack
       spacing={2}
@@ -15,6 +37,12 @@ export default function CourseCard({ courseName, courseProgressPercentage }) {
       borderRadius="15px"
       minWidth="100%"
       className="course-card-swiper-slider"
+      onClick={() => {
+        if (!didClickOnIcon) {
+          onOpen();
+        }
+        didClickOnIcon = false;
+      }}
     >
       <Image
         height="100px"
@@ -23,6 +51,24 @@ export default function CourseCard({ courseName, courseProgressPercentage }) {
         src="/course_icon.jpeg"
         borderRadius="15px"
       />
+      <Drawer onClose={onClose} isOpen={isOpen} size={"xl"}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            <Stack w="100%" px="5" py="2">
+              <Heading>Course Management</Heading>
+            </Stack>
+          </DrawerHeader>
+          <DrawerBody>
+            <CourseTaskList
+              tasks={data}
+              courseProgressPercentage={courseProgressPercentage}
+              courseName={courseName}
+            />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
       <VStack spacing={2} alignItems="left" width="100%">
         <Heading as="h1" size="md" display="inline">
           {courseName}
@@ -42,6 +88,10 @@ export default function CourseCard({ courseName, courseProgressPercentage }) {
         icon={<DeleteIcon />}
         size="lg"
         color="red"
+        onClick={() => {
+          didClickOnIcon = true;
+          console.log("Deleting course");
+        }}
       />
     </HStack>
   );

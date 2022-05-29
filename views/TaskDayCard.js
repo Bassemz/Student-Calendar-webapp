@@ -35,8 +35,6 @@ const data = [
 ];
 
 export default function TaskDayCard() {
-  console.log(data);
-
   return (
     <VStack
       padding="4"

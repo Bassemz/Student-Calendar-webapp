@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import CourseSwiper from "./CourseSwiper";
-import TaskDayCard from "./TaskDayCard";
 import TaskSwiper from "./TaskSwiper";
 
 const monthNames = [
@@ -101,7 +100,7 @@ export default function DashBoardBody() {
             </ModalContent>
           </Modal>
         </HStack>
-        {/* <CourseCard /> */}
+        {/* Course swiper component*/}
         <CourseSwiper />
       </VStack>
       <VStack

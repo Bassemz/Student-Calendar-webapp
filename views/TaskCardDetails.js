@@ -36,9 +36,6 @@ import {
 // ]
 
 export default function TaskCardDetail({ name, tasks }) {
-  console.log(name);
-  console.log(tasks);
-
   return (
     <VStack
       spacing="1.5"
