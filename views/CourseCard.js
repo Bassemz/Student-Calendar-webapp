@@ -96,7 +96,11 @@ export default function CourseCard({
         onClick={() => {
           didClickOnIcon = true;
           if (confirm(`Are you sure you want to delete course ${courseName}`))
-            dispatch(removeCourse(courseName.toUpperCase()));
+            dispatch(
+              removeCourse({
+                courseIndex: courseIndex,
+              })
+            );
         }}
       />
     </HStack>

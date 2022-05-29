@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { AddIcon, CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { Flex, Heading, HStack, OrderedList, VStack } from "@chakra-ui/layout";
 import {
@@ -11,8 +12,9 @@ import {
   useEditableControls,
 } from "@chakra-ui/react";
 
-import { useDispatch } from "react-redux";
-import { addTasks } from "../app/slices/userCourses";
+import { useSelector, useDispatch } from "react-redux";
+import { uuid } from "uuidv4";
+import { addTasks, editCourseName } from "../app/slices/userCourses";
 import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 
 // const data = [
@@ -49,6 +51,8 @@ function CourseTaskList({
   courseProgressPercentage,
 }) {
   const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.userCourses.value);
+  const inputRef = useRef(0);
 
   //Function component
   function EditableControls() {
@@ -78,6 +82,7 @@ function CourseTaskList({
         courseIndex: courseIndex,
       })
     );
+    console.log(data);
   };
 
   return (
@@ -89,10 +94,18 @@ function CourseTaskList({
           fontWeight={"bold"}
           isPreviewFocusable={false}
           marginLeft="0"
+          onSubmit={() => {
+            dispatch(
+              editCourseName({
+                courseIndex: courseIndex,
+                courseName: inputRef.current.value,
+              })
+            );
+          }}
         >
           <HStack>
             <EditablePreview />
-            <Input as={EditableInput} />
+            <Input ref={inputRef} as={EditableInput} />
             <EditableControls />
           </HStack>
         </Editable>
@@ -114,7 +127,7 @@ function CourseTaskList({
         {tasks.map((e, i) => {
           return (
             <DrawerCourseTaskItem
-              key={e.taskName}
+              key={e.taskId}
               courseIndex={courseIndex}
               taskIndex={e.taskIndex}
               taskName={e.taskName}

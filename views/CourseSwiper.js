@@ -10,6 +10,7 @@ import { Navigation, Pagination } from "swiper";
 
 import CourseCard from "./CourseCard";
 import { HStack } from "@chakra-ui/layout";
+import { uuid } from "uuidv4";
 
 // const data = [
 //   {
@@ -136,9 +137,8 @@ export default function CourseSwiper() {
                     e.totalNumberOfMilestones) *
                     100
                 );
-
           return (
-            <SwiperSlide key={i} id={i}>
+            <SwiperSlide key={e.courseId} id={i}>
               <CourseCard
                 courseIndex={e.courseIndex}
                 courseName={e.courseName}

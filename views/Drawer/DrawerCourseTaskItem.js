@@ -19,7 +19,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   editTaskName,
   removeTask,
@@ -27,6 +27,7 @@ import {
 } from "../../app/slices/userCourses";
 import DrawerCourseMilestoneItem from "./DrawerCourseMilestoneItem";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { uuid } from "uuidv4";
 
 function DrawerCourseTaskItem({
   courseIndex,
@@ -34,6 +35,7 @@ function DrawerCourseTaskItem({
   taskName,
   milestones,
 }) {
+  const { data } = useSelector((state) => state.userCourses.value);
   //   console.log(taskName);
   const dispatch = useDispatch();
   const taskNameInput = useRef(0);
@@ -82,6 +84,7 @@ function DrawerCourseTaskItem({
               if (
                 confirm(`Are you sure you want to delete Task: "${taskName}"`)
               ) {
+                console.log(data);
                 dispatch(
                   removeTask({
                     courseIndex: courseIndex,
@@ -106,8 +109,9 @@ function DrawerCourseTaskItem({
               <OrderedList fontSize={"lg"}>
                 {milestones.map((e, i) => {
                   return (
-                    <ListItem key={e.milestoneName}>
+                    <ListItem key={e.milestoneId}>
                       <DrawerCourseMilestoneItem
+                        key={uuid()}
                         courseIndex={courseIndex}
                         taskIndex={taskIndex}
                         milestoneName={e.milestoneName}
