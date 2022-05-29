@@ -85,7 +85,7 @@ import { HStack } from "@chakra-ui/layout";
 // ];
 
 export default function CourseSwiper() {
-  const data = useSelector((state) => state.userCourses.value.data);
+  const { data } = useSelector((state) => state.userCourses.value);
 
   return (
     <HStack w="100%">
@@ -128,14 +128,19 @@ export default function CourseSwiper() {
         height="100%"
       >
         {data.map((e, i) => {
-          let courseProgressPercentage = Math.floor(
-            (e.totalNumberOfCompletedMilestones / e.totalNumberOfMilestones) *
-              100
-          );
+          let courseProgressPercentage =
+            e.totalNumberOfMilestones === 0
+              ? 0
+              : Math.floor(
+                  (e.totalNumberOfCompletedMilestones /
+                    e.totalNumberOfMilestones) *
+                    100
+                );
 
           return (
             <SwiperSlide key={i} id={i}>
               <CourseCard
+                courseIndex={e.courseIndex}
                 courseName={e.courseName}
                 courseProgressPercentage={courseProgressPercentage}
                 data={e.tasks}

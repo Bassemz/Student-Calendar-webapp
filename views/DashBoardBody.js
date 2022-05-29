@@ -22,6 +22,8 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import CourseSwiper from "./CourseSwiper";
 import TaskSwiper from "./TaskSwiper";
+import { useDispatch } from "react-redux";
+import { addCourse } from "../app/slices/userCourses";
 
 const monthNames = [
   "January",
@@ -42,6 +44,7 @@ export default function DashBoardBody() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef();
   const finalRef = useRef();
+  const dispatch = useDispatch();
 
   const current = new Date();
   const date = `${current.getDate()} ${
@@ -92,7 +95,14 @@ export default function DashBoardBody() {
                 </FormControl>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme="blue" mr={3}>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => {
+                    dispatch(addCourse(initialRef.current));
+                    onClose();
+                  }}
+                >
                   Save
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>

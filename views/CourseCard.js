@@ -17,14 +17,18 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Progress } from "@chakra-ui/react";
 import CourseTaskList from "./CourseTaskList";
+import { useDispatch } from "react-redux";
+import { removeCourse } from "../app/slices/userCourses";
 
 export default function CourseCard({
+  courseIndex,
   courseName,
   courseProgressPercentage,
   data,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let didClickOnIcon = false;
+  const dispatch = useDispatch();
 
   return (
     <HStack
@@ -62,6 +66,7 @@ export default function CourseCard({
           </DrawerHeader>
           <DrawerBody>
             <CourseTaskList
+              courseIndex={courseIndex}
               tasks={data}
               courseProgressPercentage={courseProgressPercentage}
               courseName={courseName}
@@ -90,7 +95,8 @@ export default function CourseCard({
         color="red"
         onClick={() => {
           didClickOnIcon = true;
-          console.log("Deleting course");
+          if (confirm(`Are you sure you want to delete course ${courseName}`))
+            dispatch(removeCourse(courseName.toUpperCase()));
         }}
       />
     </HStack>

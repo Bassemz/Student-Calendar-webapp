@@ -1,17 +1,6 @@
-import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { Flex, Heading, HStack, OrderedList, VStack } from "@chakra-ui/layout";
 import {
-  Flex,
-  Heading,
-  HStack,
-  ListIcon,
-  ListItem,
-  OrderedList,
-  VStack,
-} from "@chakra-ui/layout";
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
   ButtonGroup,
   Editable,
   EditableInput,
@@ -22,34 +11,46 @@ import {
   useEditableControls,
 } from "@chakra-ui/react";
 
-const data = [
-  {
-    taskName: "SRS Report",
-    milestones: [
-      {
-        taskName: "Write Introduction",
-        isCompleted: false,
-      },
-      {
-        taskName: "Write Something Else",
-        isCompleted: false,
-      },
-    ],
-    percentageCompletion: 0,
-  },
-  {
-    taskName: "SDS Report",
-    milestones: [
-      {
-        taskName: "Design until you die",
-        isCompleted: false,
-      },
-    ],
-    percentageCompletion: 0,
-  },
-];
+import { useDispatch } from "react-redux";
+import { addTasks } from "../app/slices/userCourses";
+import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 
-function CourseTaskList({ courseName, tasks, courseProgressPercentage }) {
+// const data = [
+//   {
+//     taskName: "SRS Report",
+//     milestones: [
+//       {
+//         taskName: "Write Introduction",
+//         isCompleted: false,
+//       },
+//       {
+//         taskName: "Write Something Else",
+//         isCompleted: false,
+//       },
+//     ],
+//     percentageCompletion: 0,
+//   },
+//   {
+//     taskName: "SDS Report",
+//     milestones: [
+//       {
+//         taskName: "Design until you die",
+//         isCompleted: false,
+//       },
+//     ],
+//     percentageCompletion: 0,
+//   },
+// ];
+
+function CourseTaskList({
+  courseIndex,
+  courseName,
+  tasks,
+  courseProgressPercentage,
+}) {
+  const dispatch = useDispatch();
+
+  //Function component
   function EditableControls() {
     const {
       isEditing,
@@ -69,6 +70,15 @@ function CourseTaskList({ courseName, tasks, courseProgressPercentage }) {
       </Flex>
     );
   }
+  //End of unction component
+
+  const handleAddTask = () => {
+    dispatch(
+      addTasks({
+        courseIndex: courseIndex,
+      })
+    );
+  };
 
   return (
     <VStack px="10" alignItems={"left"} justifyContent="start" w="100%">
@@ -100,32 +110,28 @@ function CourseTaskList({ courseName, tasks, courseProgressPercentage }) {
           />
         </HStack>
       </HStack>
-      <OrderedList fontSize={"3xl"} px="8">
-        <ListItem>
-          <VStack w="100%" alignItems={"start"} justifyContent="start">
-            <HStack p="3">
-              <Editable
-                defaultValue="Some Value"
-                bgColor="#f4f4f4"
-                boxShadow={"dark-lg"}
-                borderRadius="md"
-                px="2"
-              >
-                <EditablePreview w="100%" />
-                <EditableInput w="100%" />
-              </Editable>
-            </HStack>
-            <Accordion allowToggle>
-              <AccordionItem>
-                <AccordionButton></AccordionButton>
-              </AccordionItem>
-            </Accordion>
-          </VStack>
-        </ListItem>
-        {/* <ListItem>Consectetur adipiscing elit</ListItem>
-        <ListItem>Integer molestie lorem at massa</ListItem>
-        <ListItem>Facilisis in pretium nisl aliquet</ListItem> */}
+      <OrderedList fontSize={"3xl"} px="8" overflowY={"auto"}>
+        {tasks.map((e, i) => {
+          return (
+            <DrawerCourseTaskItem
+              key={e.taskName}
+              courseIndex={courseIndex}
+              taskIndex={e.taskIndex}
+              taskName={e.taskName}
+              milestones={e.milestones}
+            />
+          );
+        })}
       </OrderedList>
+      <IconButton
+        aria-label="add Task"
+        icon={<AddIcon />}
+        size="lg"
+        color="white"
+        bgColor="#0055d4"
+        onClick={handleAddTask}
+      />
+      {/* <DrawerCourseTaskItem /> */}
     </VStack>
   );
 }
