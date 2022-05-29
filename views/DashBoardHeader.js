@@ -2,7 +2,6 @@ import {
   Flex,
   HStack,
   Image,
-  SimpleGrid,
   Heading,
   Menu,
   MenuButton,
@@ -11,11 +10,6 @@ import {
 } from "@chakra-ui/react";
 
 export default function DashBoardHeader() {
-  const current = new Date();
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
-
   return (
     <Flex maxW="100vw" w="100%" p={"0.9rem"} justifyContent="space-between">
       <Image src="/logo.png" maxH="70px" />
@@ -26,12 +20,6 @@ export default function DashBoardHeader() {
         justifyContent={"right"}
         pr="16"
       >
-        {/* <Flex align="center" justifyContent="center" gap={3}>
-          <Image src="/icon_calender.png" maxH="60px" />
-          <Heading color={"#bfbbbb"} fontSize="16px">
-            {date}
-          </Heading>
-        </Flex> */}
         <Flex justifyContent={"space-between"} gap={4}>
           <Image src="/icon_notification.svg" maxH="80px" />
           <Heading size="sm">Aksara Pratama M</Heading>

@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { uuid } from "uuidv4";
 import { addTasks, editCourseName } from "../app/slices/userCourses";
 import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 
@@ -51,7 +50,6 @@ function CourseTaskList({
   courseProgressPercentage,
 }) {
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.userCourses.value);
   const inputRef = useRef(0);
 
   //Function component
@@ -82,7 +80,6 @@ function CourseTaskList({
         courseIndex: courseIndex,
       })
     );
-    console.log(data);
   };
 
   return (
@@ -124,13 +121,14 @@ function CourseTaskList({
         </HStack>
       </HStack>
       <OrderedList fontSize={"3xl"} px="8" overflowY={"auto"}>
-        {tasks.map((e, i) => {
+        {tasks.map((e) => {
           return (
             <DrawerCourseTaskItem
               key={e.taskId}
               courseIndex={courseIndex}
               taskIndex={e.taskIndex}
               taskName={e.taskName}
+              taskStartTime={e.taskStartTime}
               milestones={e.milestones}
             />
           );

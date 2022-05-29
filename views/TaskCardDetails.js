@@ -1,39 +1,4 @@
-import {
-  Heading,
-  VStack,
-  UnorderedList,
-  ListItem,
-  Flex,
-} from "@chakra-ui/react";
-
-// const data =[
-//     {
-//         name: "CMSE322",
-//         tasks:[
-//             {
-//                 name: "SRS report",
-//                 milestones:[
-//                     "Write Introduction",
-//                     "Write REQs"
-//                 ]
-
-//             }
-//         ]
-//     },
-//     {
-//         name: "CMSE326",
-//         tasks:[
-//             {
-//                 name: "Assignment 1",
-//                 milestones:[
-//                     "Write test case1",
-//                 ]
-
-//             }
-//         ]
-
-//     }
-// ]
+import { Heading, VStack, UnorderedList, ListItem } from "@chakra-ui/react";
 
 export default function TaskCardDetail({ name, tasks }) {
   return (
@@ -72,18 +37,6 @@ export default function TaskCardDetail({ name, tasks }) {
           );
         })}
       </VStack>
-      {/* <Heading size="md">CMSE322</Heading>
-        <VStack spacing="1" alignItems={"left"} px={[2, 3, 4, 5]}>
-          <Heading size="sm">SRS report</Heading>
-          <UnorderedList spacing="-0.5">
-            <ListItem size="xs">Write Introduction</ListItem>
-            <ListItem size="xs">Write REQs</ListItem>
-          </UnorderedList>
-          <Heading size="sm">SDS report</Heading>
-          <UnorderedList spacing="0.5">
-            <ListItem>Draw DFD</ListItem>
-          </UnorderedList>
-          </VStack> */}
     </VStack>
   );
 }

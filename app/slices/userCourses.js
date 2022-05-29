@@ -20,19 +20,21 @@ const initialState = {
             taskIndex: 0,
             numOfMilestones: 2,
             completedMilestones: 1,
+            taskStartTime: new Date("2022-05-26"),
             milestones: [
               {
                 milestoneName: "Write Introduction",
                 milestoneId: uuid(),
                 milestoneIndex: 0,
                 isCompleted: true,
-                deadline: "",
+                deadline: new Date("2022-05-27"),
               },
               {
                 milestoneName: "Write functional reqs",
                 milestoneId: uuid(),
                 milestoneIndex: 1,
                 isCompleted: false,
+                deadline: new Date("2022-05-29"),
               },
             ],
           },
@@ -42,18 +44,21 @@ const initialState = {
             taskIndex: 1,
             numOfMilestones: 2,
             completedMilestones: 0,
+            taskStartTime: new Date("2022-05-30"),
             milestones: [
               {
                 milestoneName: "Design",
                 milestoneId: uuid(),
                 milestoneIndex: 0,
                 isCompleted: false,
+                deadline: new Date("2022-06-01"),
               },
               {
                 milestoneName: "Die",
                 milestoneId: uuid(),
                 milestoneIndex: 1,
                 isCompleted: false,
+                deadline: new Date("2022-06-02"),
               },
             ],
           },
@@ -63,18 +68,21 @@ const initialState = {
             taskIndex: 2,
             numOfMilestones: 2,
             completedMilestones: 2,
+            taskStartTime: new Date("2022-06-03"),
             milestones: [
               {
                 milestoneName: "Display Demo",
                 milestoneId: uuid(),
                 milestoneIndex: 0,
                 isCompleted: true,
+                deadline: new Date("2022-06-05"),
               },
               {
                 milestoneName: "end",
                 milestoneId: uuid(),
                 milestoneIndex: 1,
                 isCompleted: true,
+                deadline: new Date("2022-06-07"),
               },
             ],
           },
@@ -129,11 +137,13 @@ export const courseDataSlice = createSlice({
         taskIndex: data[courseIndex].totalNumberOfTasks - 1,
         numOfMilestones: 1,
         completedMilestones: 0,
+        taskStartTime: new Date(),
         milestones: [
           {
             milestoneName: "Edit me",
             milestoneIndex: 0,
             isCompleted: false,
+            deadline: new Date(),
           },
         ],
       });
@@ -194,6 +204,7 @@ export const courseDataSlice = createSlice({
         milestoneIndex:
           state.value.data[courseIndex].tasks[taskIndex].numOfMilestones,
         isCompleted: false,
+        deadline: new Date(),
       });
       state.value.data[courseIndex].totalNumberOfMilestones += 1;
       state.value.data[courseIndex].tasks[taskIndex].numOfMilestones += 1;
@@ -237,6 +248,18 @@ export const courseDataSlice = createSlice({
       const { courseIndex, courseName } = action.payload;
       state.value.data[courseIndex].courseName = courseName;
     },
+    editTaskStartTime: (state, action) => {
+      const { courseIndex, taskIndex, newStartDate } = action.payload;
+      state.value.data[courseIndex].tasks[taskIndex].taskStartTime =
+        newStartDate;
+    },
+    editMilestoneEndTime: (state, action) => {
+      const { courseIndex, taskIndex, milestoneIndex, newEndDate } =
+        action.payload;
+      state.value.data[courseIndex].tasks[taskIndex].milestones[
+        milestoneIndex
+      ].deadline = newEndDate;
+    },
   },
 });
 
@@ -252,6 +275,8 @@ export const {
   removeMilestone,
   editMilestone,
   editCourseName,
+  editTaskStartTime,
+  editMilestoneEndTime,
 } = courseDataSlice.actions;
 
 export default courseDataSlice.reducer;

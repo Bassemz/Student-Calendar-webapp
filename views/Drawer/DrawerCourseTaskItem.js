@@ -19,23 +19,21 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  editTaskName,
-  removeTask,
-  addMilestone,
-} from "../../app/slices/userCourses";
+import { useDispatch } from "react-redux";
+import { editTaskName, addMilestone } from "../../app/slices/userCourses";
 import DrawerCourseMilestoneItem from "./DrawerCourseMilestoneItem";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon, CalendarIcon, DeleteIcon } from "@chakra-ui/icons";
 import { uuid } from "uuidv4";
+
+import DrawerTaskHeader from "./DrawerTaskHeader";
 
 function DrawerCourseTaskItem({
   courseIndex,
   taskIndex,
   taskName,
+  taskStartTime,
   milestones,
 }) {
-  const { data } = useSelector((state) => state.userCourses.value);
   //   console.log(taskName);
   const dispatch = useDispatch();
   const taskNameInput = useRef(0);
@@ -73,28 +71,11 @@ function DrawerCourseTaskItem({
             <EditablePreview w="100%" />
             <EditableInput ref={taskNameInput} w="100%" />
           </Editable>
-          <IconButton
-            aria-label="icon"
-            icon={<DeleteIcon />}
-            size="lg"
-            color="red"
-            alignSelf={"right"}
-            justifySelf="end"
-            onClick={() => {
-              if (
-                confirm(`Are you sure you want to delete Task: "${taskName}"`)
-              ) {
-                console.log(data);
-                dispatch(
-                  removeTask({
-                    courseIndex: courseIndex,
-                    taskIndex: taskIndex,
-                    taskName: taskName,
-                  })
-                );
-                // dispatch(removeCourse(courseName.toUpperCase()));
-              }
-            }}
+          <DrawerTaskHeader
+            courseIndex={courseIndex}
+            taskIndex={taskIndex}
+            taskStartTime={taskStartTime}
+            taskName={taskName}
           />
         </HStack>
         <Accordion allowToggle px="3" w="100%">
@@ -116,6 +97,7 @@ function DrawerCourseTaskItem({
                         taskIndex={taskIndex}
                         milestoneName={e.milestoneName}
                         milestoneIndex={e.milestoneIndex}
+                        deadline={e.deadline}
                         isCompleted={e.isCompleted}
                       />
                     </ListItem>
