@@ -5,14 +5,20 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 // import required modules
-import { Navigation, Pagination } from "swiper";
+import { Navigation } from "swiper";
 
 import TaskDayCard from "./TaskDayCard";
 import { HStack } from "@chakra-ui/layout";
 
+import { useSelector } from "react-redux";
+
 const data = [1, 2, 3, 4, 5, 6, 7];
 
 export default function TaskSwiper() {
+  // const data = useSelector(
+  //   (state) => state.userCourses.value.calendarDays.allIds
+  // );
+
   return (
     <HStack w="100%" px="20">
       <Swiper
@@ -54,7 +60,7 @@ export default function TaskSwiper() {
         {data.map((e, i) => {
           return (
             <SwiperSlide
-              key={i}
+              key={e}
               id={i}
               style={{
                 height: "100%",
@@ -63,7 +69,7 @@ export default function TaskSwiper() {
                 alignContent: "left",
               }}
             >
-              <TaskDayCard />
+              <TaskDayCard taskDayId={e} />
             </SwiperSlide>
           );
         })}

@@ -7,7 +7,7 @@ import {
   EditablePreview,
   IconButton,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   editMilestone,
   markMilestone,
@@ -16,25 +16,25 @@ import {
 } from "../../app/slices/userCourses";
 import { DeleteIcon } from "@chakra-ui/icons";
 import DrawerTaskCalendar from "./DrawerTaskCalendar";
+import {
+  returnDateString,
+  returnDateStringWithoutMonth,
+} from "../../usefulFunctions";
 
-function DrawerCourseMilestoneItem({
-  courseIndex,
-  taskIndex,
-  milestoneName,
-  milestoneIndex,
-  isCompleted,
-  deadline,
-}) {
-  const [value, onChange] = useState(deadline);
+function DrawerCourseMilestoneItem({ milestoneId }) {
+  const { courseId, taskId, milestoneName, isCompleted, deadline } =
+    useSelector(
+      (state) => state.userCourses.value.milestones.byId[milestoneId]
+    );
+
+  const [value, onChange] = useState(new Date(deadline));
   const inputRef = useRef(0);
   const dispatch = useDispatch();
 
   const handleEditMilestone = () => {
     dispatch(
       editMilestone({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
-        milestoneIndex: milestoneIndex,
+        milestoneId: milestoneId,
         milestoneName: inputRef.current.value,
       })
     );
@@ -43,9 +43,9 @@ function DrawerCourseMilestoneItem({
   const handleRemoveMilestone = () => {
     dispatch(
       removeMilestone({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
-        milestoneIndex: milestoneIndex,
+        courseId: courseId,
+        taskId: taskId,
+        milestoneId: milestoneId,
         isCompleted,
       })
     );
@@ -54,9 +54,9 @@ function DrawerCourseMilestoneItem({
   const handleCheckboxCheck = (e) => {
     dispatch(
       markMilestone({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
-        milestoneIndex: milestoneIndex,
+        courseId: courseId,
+        taskId: taskId,
+        milestoneId: milestoneId,
         milestoneStatus: e.target.checked,
       })
     );
@@ -66,34 +66,12 @@ function DrawerCourseMilestoneItem({
     onChange(e);
     dispatch(
       editMilestoneEndTime({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
-        milestoneIndex: milestoneIndex,
-        newEndDate: e,
+        milestoneId: milestoneId,
+        newEndDate: returnDateStringWithoutMonth(e),
       })
     );
   };
 
-  function returnDateString(date) {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let s = `${date.getDate()} ${
-      months[date.getMonth()]
-    } ${date.getFullYear()}`;
-    return s;
-  }
   return (
     <HStack w="100%" py="3">
       <Editable

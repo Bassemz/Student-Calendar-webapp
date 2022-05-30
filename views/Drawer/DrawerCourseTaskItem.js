@@ -19,21 +19,24 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { editTaskName, addMilestone } from "../../app/slices/userCourses";
 import DrawerCourseMilestoneItem from "./DrawerCourseMilestoneItem";
-import { AddIcon, CalendarIcon, DeleteIcon } from "@chakra-ui/icons";
-import { uuid } from "uuidv4";
+import { AddIcon } from "@chakra-ui/icons";
 
 import DrawerTaskHeader from "./DrawerTaskHeader";
 
-function DrawerCourseTaskItem({
-  courseIndex,
-  taskIndex,
-  taskName,
-  taskStartTime,
-  milestones,
-}) {
+function DrawerCourseTaskItem({ taskId }) {
+  const taskName = useSelector(
+    (state) => state.userCourses.value.tasks.byId[taskId].taskName
+  );
+  const milestones = useSelector(
+    (state) => state.userCourses.value.tasks.byId[taskId].milestones
+  );
+  const courseId = useSelector(
+    (state) => state.userCourses.value.tasks.byId[taskId].courseId
+  );
+
   //   console.log(taskName);
   const dispatch = useDispatch();
   const taskNameInput = useRef(0);
@@ -41,8 +44,8 @@ function DrawerCourseTaskItem({
   const handleAddMilestone = () => {
     dispatch(
       addMilestone({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
+        courseId: courseId,
+        taskId: taskId,
       })
     );
   };
@@ -61,8 +64,7 @@ function DrawerCourseTaskItem({
             onSubmit={() => {
               dispatch(
                 editTaskName({
-                  courseIndex: courseIndex,
-                  taskIndex: taskIndex,
+                  taskId: taskId,
                   taskName: taskNameInput.current,
                 })
               );
@@ -71,12 +73,7 @@ function DrawerCourseTaskItem({
             <EditablePreview w="100%" />
             <EditableInput ref={taskNameInput} w="100%" />
           </Editable>
-          <DrawerTaskHeader
-            courseIndex={courseIndex}
-            taskIndex={taskIndex}
-            taskStartTime={taskStartTime}
-            taskName={taskName}
-          />
+          <DrawerTaskHeader courseId={courseId} taskId={taskId} />
         </HStack>
         <Accordion allowToggle px="3" w="100%">
           <AccordionItem>
@@ -88,17 +85,18 @@ function DrawerCourseTaskItem({
             </AccordionButton>
             <AccordionPanel>
               <OrderedList fontSize={"lg"}>
-                {milestones.map((e, i) => {
+                {milestones.map((e) => {
                   return (
-                    <ListItem key={e.milestoneId}>
+                    <ListItem key={e}>
                       <DrawerCourseMilestoneItem
-                        key={uuid()}
-                        courseIndex={courseIndex}
-                        taskIndex={taskIndex}
-                        milestoneName={e.milestoneName}
-                        milestoneIndex={e.milestoneIndex}
-                        deadline={e.deadline}
-                        isCompleted={e.isCompleted}
+                        key={e}
+                        courseId={courseId}
+                        taskId={taskId}
+                        milestoneId={e}
+                        // milestoneName={e.milestoneName}
+                        // milestoneIndex={i}
+                        // deadline={e.deadline}
+                        // isCompleted={e.isCompleted}
                       />
                     </ListItem>
                   );

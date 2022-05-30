@@ -1,4 +1,5 @@
 import { VStack, Heading } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import CourseCardDetail from "./TaskCardDetails";
 
 const data = [
@@ -34,7 +35,16 @@ const data = [
   },
 ];
 
-export default function TaskDayCard() {
+export default function TaskDayCard({ taskDayId }) {
+  // console.log(milestoneId);
+  // const milestoneIds = useSelector(
+  //   (state) =>
+  //     state.userCourses.userCourses.value.calendarDays.byId[taskDayId]
+  //       .allMilestoneIds
+  // );
+  // const
+  // console.log(milestoneIds);
+
   return (
     <VStack
       padding="4"

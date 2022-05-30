@@ -16,39 +16,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTasks, editCourseName } from "../app/slices/userCourses";
 import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 
-// const data = [
-//   {
-//     taskName: "SRS Report",
-//     milestones: [
-//       {
-//         taskName: "Write Introduction",
-//         isCompleted: false,
-//       },
-//       {
-//         taskName: "Write Something Else",
-//         isCompleted: false,
-//       },
-//     ],
-//     percentageCompletion: 0,
-//   },
-//   {
-//     taskName: "SDS Report",
-//     milestones: [
-//       {
-//         taskName: "Design until you die",
-//         isCompleted: false,
-//       },
-//     ],
-//     percentageCompletion: 0,
-//   },
-// ];
-
-function CourseTaskList({
-  courseIndex,
-  courseName,
-  tasks,
-  courseProgressPercentage,
-}) {
+function CourseTaskList({ courseId, courseName, courseProgressPercentage }) {
+  const tasks = useSelector(
+    (state) => state.userCourses.value.courses.byId[courseId].tasks
+  );
+  console.log(tasks);
   const dispatch = useDispatch();
   const inputRef = useRef(0);
 
@@ -77,7 +49,7 @@ function CourseTaskList({
   const handleAddTask = () => {
     dispatch(
       addTasks({
-        courseIndex: courseIndex,
+        courseId: courseId,
       })
     );
   };
@@ -94,7 +66,7 @@ function CourseTaskList({
           onSubmit={() => {
             dispatch(
               editCourseName({
-                courseIndex: courseIndex,
+                courseId: courseId,
                 courseName: inputRef.current.value,
               })
             );
@@ -121,17 +93,8 @@ function CourseTaskList({
         </HStack>
       </HStack>
       <OrderedList fontSize={"3xl"} px="8" overflowY={"auto"}>
-        {tasks.map((e) => {
-          return (
-            <DrawerCourseTaskItem
-              key={e.taskId}
-              courseIndex={courseIndex}
-              taskIndex={e.taskIndex}
-              taskName={e.taskName}
-              taskStartTime={e.taskStartTime}
-              milestones={e.milestones}
-            />
-          );
+        {tasks.map((e, i) => {
+          return <DrawerCourseTaskItem key={e} taskId={e} />;
         })}
       </OrderedList>
       <IconButton
@@ -142,7 +105,6 @@ function CourseTaskList({
         bgColor="#0055d4"
         onClick={handleAddTask}
       />
-      {/* <DrawerCourseTaskItem /> */}
     </VStack>
   );
 }

@@ -12,7 +12,7 @@ import {
 export default function DashBoardHeader() {
   return (
     <Flex maxW="100vw" w="100%" p={"0.9rem"} justifyContent="space-between">
-      <Image src="/logo.png" maxH="70px" />
+      <Image src="/logo.png" maxH="70px" alt="Logo" />
       <HStack
         w="100%"
         pl="15"
@@ -21,11 +21,15 @@ export default function DashBoardHeader() {
         pr="16"
       >
         <Flex justifyContent={"space-between"} gap={4}>
-          <Image src="/icon_notification.svg" maxH="80px" />
-          <Heading size="sm">Aksara Pratama M</Heading>
+          <Image
+            src="/icon_notification.svg"
+            maxH="80px"
+            alt="Notification bell"
+          />
+          <Heading size="sm">Bassem Makkie</Heading>
           <Menu>
             <MenuButton>
-              <Image src="/icon_profileArrow.svg" />
+              <Image src="/icon_profileArrow.svg" alt="Profile arrow" />
             </MenuButton>
             <MenuList>
               <MenuItem>My Profile</MenuItem>

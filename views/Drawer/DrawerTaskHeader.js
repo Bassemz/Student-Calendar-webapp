@@ -5,43 +5,32 @@ import { IconButton } from "@chakra-ui/react";
 import React from "react";
 import DrawerTaskCalendar from "./DrawerTaskCalendar";
 import { removeTask, editTaskStartTime } from "../../app/slices/userCourses";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  returnDateString,
+  returnDateStringWithoutMonth,
+} from "../../usefulFunctions";
 
-function DrawerTaskHeader({ courseIndex, taskIndex, taskStartTime, taskName }) {
-  const [value, onChange] = useState(taskStartTime);
+function DrawerTaskHeader({ courseId, taskId }) {
+  const taskStartTime = useSelector(
+    (state) => state.userCourses.value.tasks.byId[taskId].taskStartTime
+  );
+  const taskName = useSelector(
+    (state) => state.userCourses.value.tasks.byId[taskId].taskName
+  );
+
+  const [value, onChange] = useState(new Date(taskStartTime));
   const dispatch = useDispatch();
 
   const handleCalendarChange = (e) => {
     onChange(e);
     dispatch(
       editTaskStartTime({
-        courseIndex: courseIndex,
-        taskIndex: taskIndex,
-        newStartDate: e,
+        taskId: taskId,
+        newStartDate: returnDateStringWithoutMonth(e),
       })
     );
   };
-
-  function returnDateString(date) {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let s = `${date.getDate()} ${
-      months[date.getMonth()]
-    } ${date.getFullYear()}`;
-    return s;
-  }
 
   return (
     <HStack alignContent={"right"} justifyContent="end">
@@ -58,9 +47,8 @@ function DrawerTaskHeader({ courseIndex, taskIndex, taskStartTime, taskName }) {
           if (confirm(`Are you sure you want to delete Task: "${taskName}"`)) {
             dispatch(
               removeTask({
-                courseIndex: courseIndex,
-                taskIndex: taskIndex,
-                taskName: taskName,
+                courseId: courseId,
+                taskId: taskId,
               })
             );
           }

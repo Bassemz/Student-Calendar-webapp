@@ -17,15 +17,28 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Progress } from "@chakra-ui/react";
 import CourseTaskList from "./CourseTaskList";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { removeCourse } from "../app/slices/userCourses";
 
 export default function CourseCard({
-  courseIndex,
-  courseName,
-  courseProgressPercentage,
-  data,
+  courseId,
+  //   courseIndex,
+  //   courseName,
+  //   courseProgressPercentage,
+  //   data,
 }) {
+  //   console.log(useSelector((state) => state.value));
+  const course = useSelector(
+    (state) => state.userCourses.value.courses.byId[courseId]
+  );
+  let courseProgressPercentage =
+    course.totalNumberOfMilestones === 0
+      ? 0
+      : Math.floor(
+          (course.totalNumberOfCompletedMilestones /
+            course.totalNumberOfMilestones) *
+            100
+        );
   const { isOpen, onOpen, onClose } = useDisclosure();
   let didClickOnIcon = false;
   const dispatch = useDispatch();
@@ -66,17 +79,17 @@ export default function CourseCard({
           </DrawerHeader>
           <DrawerBody>
             <CourseTaskList
-              courseIndex={courseIndex}
-              tasks={data}
+              courseId={courseId}
+              //   tasks={data}
               courseProgressPercentage={courseProgressPercentage}
-              courseName={courseName}
+              courseName={course.courseName}
             />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
       <VStack spacing={2} alignItems="left" width="100%">
         <Heading as="h1" size="md" display="inline">
-          {courseName}
+          {course.courseName}
         </Heading>
         <VStack spacing={1} p={1} alignItems="left">
           <Heading size="xs">{courseProgressPercentage.toString()}%</Heading>
@@ -95,10 +108,14 @@ export default function CourseCard({
         color="red"
         onClick={() => {
           didClickOnIcon = true;
-          if (confirm(`Are you sure you want to delete course ${courseName}`))
+          if (
+            confirm(
+              `Are you sure you want to delete course ${course.courseName}`
+            )
+          )
             dispatch(
               removeCourse({
-                courseIndex: courseIndex,
+                courseId: courseId,
               })
             );
         }}
