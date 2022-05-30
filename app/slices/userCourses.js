@@ -37,7 +37,7 @@ const initialState = {
               {
                 milestoneName: "Write functional reqs",
                 milestoneId: 1,
-                // milestoneIndex: 1,
+                milestoneIndex: 1,
                 isCompleted: false,
                 deadline: "2022-05-29",
               },
@@ -94,6 +94,34 @@ const initialState = {
         ],
       },
     ],
+    calendarDays: {
+      byId: {
+        "2022-05-27": [
+          {
+            0: {
+              0: {
+                0: {},
+              },
+              allTaskIds: [0],
+            },
+            allCourseIds: [0],
+          },
+        ],
+        "2022-05-29": [],
+        "2022-06-01": [],
+        "2022-06-02": [],
+        "2022-06-05": [],
+        "2022-06-07": [],
+      },
+      allIds: [
+        "2022-05-27",
+        "2022-05-29",
+        "2022-06-01",
+        "2022-06-02",
+        "2022-06-05",
+        "2022-06-07",
+      ],
+    },
   },
 };
 
@@ -126,7 +154,16 @@ export const courseDataSlice = createSlice({
     removeCourse: (state, action) => {
       //   console.log(action.payload);
       const { courseIndex } = action.payload;
-      state.value.data = state.value.data.filter((_, i) => courseIndex !== i);
+      let increment = 0;
+      state.value.data = state.value.data.filter((e, i) => {
+        if (courseIndex !== i) {
+          e.courseIndex = increment;
+          increment++;
+          return false;
+        }
+        return true;
+        //    return  courseIndex !== i}
+      });
       //   state.value.data.forEach((e, i) => {
       //     e.courseIndex = i;
       //   });
@@ -180,9 +217,18 @@ export const courseDataSlice = createSlice({
       state.value.data[courseIndex].totalNumberOfCompletedMilestones -=
         state.value.data[courseIndex].tasks[taskIndex].completedMilestones;
       // Remove the element from the tasks array
+      let increment = 0;
       state.value.data[courseIndex].tasks = state.value.data[
         courseIndex
-      ].tasks.filter((_, i) => i !== taskIndex);
+      ].tasks.filter((e, i) => {
+        if (i !== taskIndex) {
+          e.taskIndex = increment;
+          increment++;
+          return false;
+        }
+        return true;
+        //    return i !== taskIndex
+      });
       // Reorder the indexes
       //   state.value.data[courseIndex].tasks.forEach((e, i) => {
       //     e.taskIndex = i;
@@ -251,9 +297,17 @@ export const courseDataSlice = createSlice({
       ) {
         return;
       }
+      let increment = 0;
       state.value.data[courseIndex].tasks[taskIndex].milestones =
         state.value.data[courseIndex].tasks[taskIndex].milestones.filter(
-          (_, i) => milestoneIndex !== i
+          (e, i) => {
+            if (milestoneIndex !== i) {
+              e.milestoneIndex = increment;
+              increment++;
+              return false;
+            }
+            return true;
+          }
         );
       // Remove Item
       //   let increment = 0;
