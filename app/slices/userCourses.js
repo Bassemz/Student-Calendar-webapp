@@ -235,7 +235,7 @@ export const courseDataSlice = createSlice({
       tasksObj.byId[taskId] = {
         taskName: "Task Name (Click me to edit)",
         courseId: courseId,
-        numOfMilestones: 1,
+        numOfMilestones: 0,
         completedMilestones: 0,
         taskStartTime: returnDateStringWithoutMonth(new Date()),
         milestones: [],
