@@ -44,11 +44,14 @@ import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 // ];
 
 function CourseTaskList({
-  courseIndex,
+  courseId,
   courseName,
-  tasks,
+  //   tasks,
   courseProgressPercentage,
 }) {
+  const tasks = useSelector(
+    (state) => state.userCourses.value.courses.byId[courseId].tasks
+  );
   console.log(tasks);
   const dispatch = useDispatch();
   const inputRef = useRef(0);
@@ -78,7 +81,7 @@ function CourseTaskList({
   const handleAddTask = () => {
     dispatch(
       addTasks({
-        courseIndex: courseIndex,
+        courseId: courseId,
       })
     );
   };
@@ -95,7 +98,7 @@ function CourseTaskList({
           onSubmit={() => {
             dispatch(
               editCourseName({
-                courseIndex: courseIndex,
+                courseId: courseId,
                 courseName: inputRef.current.value,
               })
             );
@@ -125,12 +128,11 @@ function CourseTaskList({
         {tasks.map((e, i) => {
           return (
             <DrawerCourseTaskItem
-              key={e.taskId}
-              courseIndex={courseIndex}
-              taskIndex={i}
-              taskName={e.taskName}
-              taskStartTime={e.taskStartTime}
-              milestones={e.milestones}
+              key={e}
+              taskId={e}
+              //   taskName={e.taskName}
+              //   taskStartTime={e.taskStartTime}
+              //   milestones={e.milestones}
             />
           );
         })}

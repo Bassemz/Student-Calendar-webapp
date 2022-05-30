@@ -2,47 +2,48 @@ import { VStack, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import CourseCardDetail from "./TaskCardDetails";
 
-const data = [];
-//   {
-//     name: "CMSE322",
-//     tasks: [
-//       {
-//         name: "SRS report",
-//         milestones: ["Write Introduction", "Write REQs"],
-//       },
-//       {
-//         name: "SDS report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-//   {
-//     name: "CMSE326",
-//     tasks: [
-//       {
-//         name: "Assignment 1",
-//         milestones: ["Write test case1"],
-//       },
-//       {
-//         name: "Assignment 2",
-//         milestones: ["Test Website1"],
-//         milestones: ["Test Website2"],
-//         milestones: ["Assess quality"],
-//         milestones: ["Compare"],
-//         milestones: ["Write result"],
-//       },
-//     ],
-//   },
-// ];
+const data = [
+  {
+    name: "CMSE322",
+    tasks: [
+      {
+        name: "SRS report",
+        milestones: ["Write Introduction", "Write REQs"],
+      },
+      {
+        name: "SDS report",
+        milestones: ["Design", "Design", "Design", "Die"],
+      },
+    ],
+  },
+  {
+    name: "CMSE326",
+    tasks: [
+      {
+        name: "Assignment 1",
+        milestones: ["Write test case1"],
+      },
+      {
+        name: "Assignment 2",
+        milestones: ["Test Website1"],
+        milestones: ["Test Website2"],
+        milestones: ["Assess quality"],
+        milestones: ["Compare"],
+        milestones: ["Write result"],
+      },
+    ],
+  },
+];
 
 export default function TaskDayCard({ taskDayId }) {
   // console.log(milestoneId);
-  const milestoneIds = useSelector(
-    (state) =>
-      state.userCourses.value.calendarDays.byId[taskDayId].allMilestoneIds
-  );
+  // const milestoneIds = useSelector(
+  //   (state) =>
+  //     state.userCourses.userCourses.value.calendarDays.byId[taskDayId]
+  //       .allMilestoneIds
+  // );
   // const
-  console.log(milestoneIds);
+  // console.log(milestoneIds);
 
   return (
     <VStack

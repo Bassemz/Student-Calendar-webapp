@@ -10,83 +10,11 @@ import { Navigation, Pagination } from "swiper";
 
 import CourseCard from "./CourseCard";
 import { HStack } from "@chakra-ui/layout";
-import { uuid } from "uuidv4";
-
-// const data = [
-//   {
-//     courseN: "CMSE322",
-//     courseProgressPercentage: 70,
-//     courseData: [
-//       {
-//         taskName: "SRS Report",
-//         milestones: ["Write Introduction", "Write non-functional requirements"],
-//       },
-//       {
-//         taskName: "SDS Report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-//   {
-//     courseN: "CMSE318",
-//     courseProgressPercentage: 60,
-//     courseData: [
-//       {
-//         taskName: "SRS Report",
-//         milestones: ["Write Introduction", "Write non-functional requirements"],
-//       },
-//       {
-//         taskName: "SDS Report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-//   {
-//     courseN: "CMSE346",
-//     courseProgressPercentage: 90,
-//     courseData: [
-//       {
-//         taskName: "SRS Report",
-//         milestones: ["Write Introduction", "Write non-functional requirements"],
-//       },
-//       {
-//         taskName: "SDS Report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-//   {
-//     courseN: "CMSE354",
-//     courseProgressPercentage: 50,
-//     courseData: [
-//       {
-//         taskName: "SRS Report",
-//         milestones: ["Write Introduction", "Write non-functional requirements"],
-//       },
-//       {
-//         taskName: "SDS Report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-//   {
-//     courseN: "CMSE326",
-//     courseProgressPercentage: 40,
-//     courseData: [
-//       {
-//         taskName: "SRS Report",
-//         milestones: ["Write Introduction", "Write non-functional requirements"],
-//       },
-//       {
-//         taskName: "SDS Report",
-//         milestones: ["Design", "Design", "Design", "Die"],
-//       },
-//     ],
-//   },
-// ];
 
 export default function CourseSwiper() {
-  const { data } = useSelector((state) => state.userCourses.value);
+  const courseIds = useSelector(
+    (state) => state.userCourses.value.courses.allCourseIds
+  );
 
   return (
     <HStack w="100%">
@@ -128,22 +56,23 @@ export default function CourseSwiper() {
         className="mySwiper"
         height="100%"
       >
-        {data.map((e, i) => {
-          let courseProgressPercentage =
-            e.totalNumberOfMilestones === 0
-              ? 0
-              : Math.floor(
-                  (e.totalNumberOfCompletedMilestones /
-                    e.totalNumberOfMilestones) *
-                    100
-                );
+        {courseIds.map((e, i) => {
+          // let courseProgressPercentage =
+          //   e.totalNumberOfMilestones === 0
+          //     ? 0
+          //     : Math.floor(
+          //         (e.totalNumberOfCompletedMilestones /
+          //           e.totalNumberOfMilestones) *
+          //           100
+          //       );
           return (
-            <SwiperSlide key={e.courseId}>
+            <SwiperSlide key={e}>
               <CourseCard
-                courseIndex={i}
-                courseName={e.courseName}
-                courseProgressPercentage={courseProgressPercentage}
-                data={e.tasks}
+                key={e}
+                courseId={e}
+                // courseName={e.courseName}
+                // courseProgressPercentage={courseProgressPercentage}
+                // data={e.tasks}
               />
             </SwiperSlide>
           );
