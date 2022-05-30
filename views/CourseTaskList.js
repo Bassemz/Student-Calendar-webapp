@@ -16,39 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTasks, editCourseName } from "../app/slices/userCourses";
 import DrawerCourseTaskItem from "./Drawer/DrawerCourseTaskItem";
 
-// const data = [
-//   {
-//     taskName: "SRS Report",
-//     milestones: [
-//       {
-//         taskName: "Write Introduction",
-//         isCompleted: false,
-//       },
-//       {
-//         taskName: "Write Something Else",
-//         isCompleted: false,
-//       },
-//     ],
-//     percentageCompletion: 0,
-//   },
-//   {
-//     taskName: "SDS Report",
-//     milestones: [
-//       {
-//         taskName: "Design until you die",
-//         isCompleted: false,
-//       },
-//     ],
-//     percentageCompletion: 0,
-//   },
-// ];
-
-function CourseTaskList({
-  courseId,
-  courseName,
-  //   tasks,
-  courseProgressPercentage,
-}) {
+function CourseTaskList({ courseId, courseName, courseProgressPercentage }) {
   const tasks = useSelector(
     (state) => state.userCourses.value.courses.byId[courseId].tasks
   );
@@ -126,15 +94,7 @@ function CourseTaskList({
       </HStack>
       <OrderedList fontSize={"3xl"} px="8" overflowY={"auto"}>
         {tasks.map((e, i) => {
-          return (
-            <DrawerCourseTaskItem
-              key={e}
-              taskId={e}
-              //   taskName={e.taskName}
-              //   taskStartTime={e.taskStartTime}
-              //   milestones={e.milestones}
-            />
-          );
+          return <DrawerCourseTaskItem key={e} taskId={e} />;
         })}
       </OrderedList>
       <IconButton
@@ -145,7 +105,6 @@ function CourseTaskList({
         bgColor="#0055d4"
         onClick={handleAddTask}
       />
-      {/* <DrawerCourseTaskItem /> */}
     </VStack>
   );
 }
