@@ -16,6 +16,10 @@ import {
 } from "../../app/slices/userCourses";
 import { DeleteIcon } from "@chakra-ui/icons";
 import DrawerTaskCalendar from "./DrawerTaskCalendar";
+import {
+  returnDateString,
+  returnDateStringWithoutMonth,
+} from "../../usefulFunctions";
 
 function DrawerCourseMilestoneItem({
   courseIndex,
@@ -25,7 +29,7 @@ function DrawerCourseMilestoneItem({
   isCompleted,
   deadline,
 }) {
-  const [value, onChange] = useState(deadline);
+  const [value, onChange] = useState(new Date(deadline));
   const inputRef = useRef(0);
   const dispatch = useDispatch();
 
@@ -69,31 +73,11 @@ function DrawerCourseMilestoneItem({
         courseIndex: courseIndex,
         taskIndex: taskIndex,
         milestoneIndex: milestoneIndex,
-        newEndDate: e,
+        newEndDate: returnDateStringWithoutMonth(e),
       })
     );
   };
 
-  function returnDateString(date) {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let s = `${date.getDate()} ${
-      months[date.getMonth()]
-    } ${date.getFullYear()}`;
-    return s;
-  }
   return (
     <HStack w="100%" py="3">
       <Editable

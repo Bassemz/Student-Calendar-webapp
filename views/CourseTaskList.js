@@ -49,6 +49,7 @@ function CourseTaskList({
   tasks,
   courseProgressPercentage,
 }) {
+  console.log(tasks);
   const dispatch = useDispatch();
   const inputRef = useRef(0);
 
@@ -121,12 +122,12 @@ function CourseTaskList({
         </HStack>
       </HStack>
       <OrderedList fontSize={"3xl"} px="8" overflowY={"auto"}>
-        {tasks.map((e) => {
+        {tasks.map((e, i) => {
           return (
             <DrawerCourseTaskItem
               key={e.taskId}
               courseIndex={courseIndex}
-              taskIndex={e.taskIndex}
+              taskIndex={i}
               taskName={e.taskName}
               taskStartTime={e.taskStartTime}
               milestones={e.milestones}

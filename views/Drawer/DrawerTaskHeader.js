@@ -6,9 +6,13 @@ import React from "react";
 import DrawerTaskCalendar from "./DrawerTaskCalendar";
 import { removeTask, editTaskStartTime } from "../../app/slices/userCourses";
 import { useDispatch } from "react-redux";
+import {
+  returnDateString,
+  returnDateStringWithoutMonth,
+} from "../../usefulFunctions";
 
 function DrawerTaskHeader({ courseIndex, taskIndex, taskStartTime, taskName }) {
-  const [value, onChange] = useState(taskStartTime);
+  const [value, onChange] = useState(new Date(taskStartTime));
   const dispatch = useDispatch();
 
   const handleCalendarChange = (e) => {
@@ -17,31 +21,10 @@ function DrawerTaskHeader({ courseIndex, taskIndex, taskStartTime, taskName }) {
       editTaskStartTime({
         courseIndex: courseIndex,
         taskIndex: taskIndex,
-        newStartDate: e,
+        newStartDate: returnDateStringWithoutMonth(e),
       })
     );
   };
-
-  function returnDateString(date) {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let s = `${date.getDate()} ${
-      months[date.getMonth()]
-    } ${date.getFullYear()}`;
-    return s;
-  }
 
   return (
     <HStack alignContent={"right"} justifyContent="end">

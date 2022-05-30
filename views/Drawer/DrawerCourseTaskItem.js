@@ -22,7 +22,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { editTaskName, addMilestone } from "../../app/slices/userCourses";
 import DrawerCourseMilestoneItem from "./DrawerCourseMilestoneItem";
-import { AddIcon, CalendarIcon, DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import { uuid } from "uuidv4";
 
 import DrawerTaskHeader from "./DrawerTaskHeader";
@@ -92,11 +92,11 @@ function DrawerCourseTaskItem({
                   return (
                     <ListItem key={e.milestoneId}>
                       <DrawerCourseMilestoneItem
-                        key={uuid()}
+                        key={e.milestoneId}
                         courseIndex={courseIndex}
                         taskIndex={taskIndex}
                         milestoneName={e.milestoneName}
-                        milestoneIndex={e.milestoneIndex}
+                        milestoneIndex={i}
                         deadline={e.deadline}
                         isCompleted={e.isCompleted}
                       />

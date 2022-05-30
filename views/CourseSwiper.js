@@ -138,9 +138,9 @@ export default function CourseSwiper() {
                     100
                 );
           return (
-            <SwiperSlide key={e.courseId} id={i}>
+            <SwiperSlide key={e.courseId}>
               <CourseCard
-                courseIndex={e.courseIndex}
+                courseIndex={i}
                 courseName={e.courseName}
                 courseProgressPercentage={courseProgressPercentage}
                 data={e.tasks}
