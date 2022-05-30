@@ -9,111 +9,137 @@ let milestoneIdCounter = 6;
 const initialState = {
   value: {
     userId: 1,
-    numOfCourses: 1,
-    data: [
-      {
-        courseName: "CMSE322",
-        courseId: 0,
-        courseIndex: 0,
-        totalNumberOfTasks: 3,
-        totalNumberOfMilestones: 6,
-        totalNumberOfCompletedMilestones: 3,
-        tasks: [
-          {
-            taskName: "SRS Report",
-            taskId: 0,
-            taskIndex: 0,
-            numOfMilestones: 2,
-            completedMilestones: 1,
-            taskStartTime: "2022-05-26",
-            milestones: [
-              {
-                milestoneName: "Write Introduction",
-                milestoneId: 0,
-                milestoneIndex: 0,
-                isCompleted: true,
-                deadline: "2022-05-27",
-              },
-              {
-                milestoneName: "Write functional reqs",
-                milestoneId: 1,
-                milestoneIndex: 1,
-                isCompleted: false,
-                deadline: "2022-05-29",
-              },
-            ],
-          },
-          {
-            taskName: "SDS Report",
-            taskId: 1,
-            taskIndex: 1,
-            numOfMilestones: 2,
-            completedMilestones: 0,
-            taskStartTime: "2022-05-30",
-            milestones: [
-              {
-                milestoneName: "Design",
-                milestoneId: 2,
-                milestoneIndex: 0,
-                isCompleted: false,
-                deadline: "2022-06-01",
-              },
-              {
-                milestoneName: "Die",
-                milestoneId: 3,
-                milestoneIndex: 1,
-                isCompleted: false,
-                deadline: "2022-06-02",
-              },
-            ],
-          },
-          {
-            taskName: "Deliver",
-            taskId: 2,
-            taskIndex: 2,
-            numOfMilestones: 2,
-            completedMilestones: 2,
-            taskStartTime: "2022-06-03",
-            milestones: [
-              {
-                milestoneName: "Display Demo",
-                milestoneId: 4,
-                milestoneIndex: 0,
-                isCompleted: true,
-                deadline: "2022-06-05",
-              },
-              {
-                milestoneName: "end",
-                milestoneId: 5,
-                milestoneIndex: 1,
-                isCompleted: true,
-                deadline: "2022-06-07",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    calendarDays: {
+    courses: {
       byId: {
-        "2022-05-27": [
-          {
-            0: {
-              0: {
-                0: {},
-              },
-              allTaskIds: [0],
-            },
-            allCourseIds: [0],
-          },
-        ],
-        "2022-05-29": [],
-        "2022-06-01": [],
-        "2022-06-02": [],
-        "2022-06-05": [],
-        "2022-06-07": [],
+        c_0: {
+          courseName: "CMSE322",
+          tasks: ["t_0", "t_1", "t_2"],
+          totalNumberOfTasks: 3,
+          totalNumberOfMilestones: 6,
+          totalNumberOfCompletedMilestones: 3,
+        },
       },
-      allIds: [
+      allCourseIds: ["c_0"],
+    },
+    tasks: {
+      byId: {
+        t_0: {
+          taskName: "SRS Report",
+          numOfMilestones: 2,
+          completedMilestones: 1,
+          taskStartTime: "2022-05-26",
+          milestones: ["m_0", "m_1"],
+        },
+        t_1: {
+          taskName: "SDS Report",
+          numOfMilestones: 2,
+          completedMilestones: 0,
+          taskStartTime: "2022-05-30",
+          milestones: ["m_2", "m_3"],
+        },
+        t_2: {
+          taskName: "Deliver",
+          numOfMilestones: 2,
+          completedMilestones: 2,
+          taskStartTime: "2022-06-03",
+          milestones: ["m_4", "m_5"],
+        },
+      },
+      allTaskIds: ["t_0", "t_1", "t_2"],
+    },
+    milestones: {
+      byId: {
+        m_0: {
+          milestoneName: "Write Introduction",
+          isCompleted: true,
+          deadline: "2022-05-27",
+        },
+        m_1: {
+          milestoneName: "Write functional reqs",
+          isCompleted: false,
+          deadline: "2022-05-29",
+        },
+        m_2: {
+          milestoneName: "Design",
+          isCompleted: false,
+          deadline: "2022-06-01",
+        },
+        m_3: {
+          milestoneName: "Design",
+          isCompleted: false,
+          deadline: "2022-06-02",
+        },
+        m_4: {
+          milestoneName: "Display demo",
+          isCompleted: true,
+          deadline: "2022-06-05",
+        },
+        m_5: {
+          milestoneName: "Display demo",
+          isCompleted: true,
+          deadline: "2022-06-07",
+        },
+      },
+      allMilestoneIds: [0, 1, 2, 3, 4, 5],
+    },
+    calendar: {
+      byId: {
+        "2022-05-27": {
+          byId: {
+            m_0: {
+              courseId: "c_0",
+              taskId: "t_0",
+            },
+          },
+          allMilestoneIds: ["m_0"],
+        },
+        "2022-05-29": {
+          byId: {
+            m_1: {
+              courseId: "c_0",
+              taskId: "t_0",
+            },
+          },
+          allMilestoneIds: ["m_1"],
+        },
+        "2022-06-01": {
+          byId: {
+            m_2: {
+              courseId: "c_0",
+              taskId: "t_1",
+            },
+          },
+          allMilestoneIds: ["m_2"],
+        },
+        "2022-06-02": {
+          byId: {
+            m_3: {
+              courseId: "c_0",
+              taskId: "t_1",
+            },
+          },
+          allMilestoneIds: ["m_3"],
+        },
+        "2022-06-05": {
+          byId: {
+            m_4: {
+              courseId: "c_0",
+              taskId: "t_2",
+            },
+          },
+          allMilestoneIds: ["m_4"],
+        },
+        "2022-06-07": {
+          byId: {
+            m_5: {
+              courseId: "c_0",
+              taskId: "t_2",
+            },
+          },
+          allMilestoneIds: ["m_5"],
+        },
+      },
+      allCalendarDays: [
         "2022-05-27",
         "2022-05-29",
         "2022-06-01",
@@ -124,6 +150,125 @@ const initialState = {
     },
   },
 };
+
+// const initialState = {
+//   value: {
+//     userId: 1,
+//     numOfCourses: 1,
+//     data: [
+//       {
+//         courseName: "CMSE322",
+//         courseId: 0,
+//         courseIndex: 0,
+//         totalNumberOfTasks: 3,
+//         totalNumberOfMilestones: 6,
+//         totalNumberOfCompletedMilestones: 3,
+//         tasks: [
+//           {
+//             taskName: "SRS Report",
+//             taskId: 0,
+//             taskIndex: 0,
+//             numOfMilestones: 2,
+//             completedMilestones: 1,
+//             taskStartTime: "2022-05-26",
+//             milestones: [
+//               {
+//                 milestoneName: "Write Introduction",
+//                 milestoneId: 0,
+//                 milestoneIndex: 0,
+//                 isCompleted: true,
+//                 deadline: "2022-05-27",
+//               },
+//               {
+//                 milestoneName: "Write functional reqs",
+//                 milestoneId: 1,
+//                 milestoneIndex: 1,
+//                 isCompleted: false,
+//                 deadline: "2022-05-29",
+//               },
+//             ],
+//           },
+//           {
+//             taskName: "SDS Report",
+//             taskId: 1,
+//             taskIndex: 1,
+//             numOfMilestones: 2,
+//             completedMilestones: 0,
+//             taskStartTime: "2022-05-30",
+//             milestones: [
+//               {
+//                 milestoneName: "Design",
+//                 milestoneId: 2,
+//                 milestoneIndex: 0,
+//                 isCompleted: false,
+//                 deadline: "2022-06-01",
+//               },
+//               {
+//                 milestoneName: "Die",
+//                 milestoneId: 3,
+//                 milestoneIndex: 1,
+//                 isCompleted: false,
+//                 deadline: "2022-06-02",
+//               },
+//             ],
+//           },
+//           {
+//             taskName: "Deliver",
+//             taskId: 2,
+//             taskIndex: 2,
+//             numOfMilestones: 2,
+//             completedMilestones: 2,
+//             taskStartTime: "2022-06-03",
+//             milestones: [
+//               {
+//                 milestoneName: "Display Demo",
+//                 milestoneId: 4,
+//                 milestoneIndex: 0,
+//                 isCompleted: true,
+//                 deadline: "2022-06-05",
+//               },
+//               {
+//                 milestoneName: "end",
+//                 milestoneId: 5,
+//                 milestoneIndex: 1,
+//                 isCompleted: true,
+//                 deadline: "2022-06-07",
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//     ],
+//     calendarDays: {
+//       byId: {
+//         "2022-05-27": [
+//           {
+//             0: {
+//               0: {
+//                 0: {},
+//               },
+//               allTaskIds: [0],
+//             },
+//             allCourseIds: [0],
+//           },
+//         ],
+//         "2022-05-29": [],
+//         "2022-06-01": [],
+//         "2022-06-02": [],
+//         "2022-06-05": [],
+//         "2022-06-07": [],
+//       },
+//       allIds: [
+//         "2022-05-27",
+//         "2022-05-29",
+//         "2022-06-01",
+//         "2022-06-02",
+//         "2022-06-05",
+//         "2022-06-07",
+//       ],
+//     },
+//   },
+// };
 
 export const courseDataSlice = createSlice({
   name: "userCourses",
@@ -138,18 +283,29 @@ export const courseDataSlice = createSlice({
     addCourse: (state, action) => {
       //   console.log(action.payload.value);
       //   console.log(state.value.numOfCourses);
-      let currentIndex = state.value.numOfCourses;
-      state.value.data.push({
-        courseName: action.payload.value.toUpperCase(),
-        courseId: courseIdCounter,
-        courseIndex: currentIndex,
+      //   let currentIndex = state.value.numOfCourses;
+      //   state.value.data.push({
+      //     courseName: action.payload.value.toUpperCase(),
+      //     courseId: courseIdCounter,
+      //     courseIndex: currentIndex,
+      //     totalNumberOfTasks: 0,
+      //     totalNumberOfMilestones: 0,
+      //     totalNumberOfCompletedMilestones: 0,
+      //     tasks: [],
+      //   });
+      //   courseIdCounter++;
+      //   state.value.numOfCourses += 1;
+      const { courseName } = action.payload;
+      let courseId = `c_${courseIdCounter}`;
+      courseIdCounter++;
+      state.value.courses.allCourseIds.push(courseId);
+      state.value.courses.byId[courseId] = {
+        courseName: courseName,
+        tasks: [],
         totalNumberOfTasks: 0,
         totalNumberOfMilestones: 0,
         totalNumberOfCompletedMilestones: 0,
-        tasks: [],
-      });
-      courseIdCounter++;
-      state.value.numOfCourses += 1;
+      };
     },
     removeCourse: (state, action) => {
       //   console.log(action.payload);
