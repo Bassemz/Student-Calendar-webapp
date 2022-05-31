@@ -20,7 +20,7 @@ function CourseTaskList({ courseId, courseName, courseProgressPercentage }) {
   const tasks = useSelector(
     (state) => state.userCourses.value.courses.byId[courseId].tasks
   );
-  console.log(tasks);
+  // console.log(tasks);
   const dispatch = useDispatch();
   const inputRef = useRef(0);
 

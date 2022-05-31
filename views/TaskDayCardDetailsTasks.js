@@ -6,7 +6,7 @@ function TaskDayCardDetailsTasks({ taskDayId, taskId, courseId }) {
     (state) =>
       state.userCourses.value.calendar.byId[taskDayId].byId[courseId][taskId]
   );
-  console.log(milestones);
+  // console.log(milestones);
   const taskName = useSelector(
     (state) => state.userCourses.value.tasks.byId[taskId].taskName
   );

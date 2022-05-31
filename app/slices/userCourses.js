@@ -57,49 +57,49 @@ const initialState = {
           taskId: "t_0",
           milestoneName: "Write Introduction",
           isCompleted: true,
-          deadline: "2022-05-27",
+          deadline: "2022-5-27",
         },
         m_1: {
           courseId: "c_0",
           taskId: "t_0",
           milestoneName: "Write functional reqs",
           isCompleted: false,
-          deadline: "2022-05-29",
+          deadline: "2022-5-29",
         },
         m_2: {
           courseId: "c_0",
           taskId: "t_1",
           milestoneName: "Design",
           isCompleted: false,
-          deadline: "2022-06-01",
+          deadline: "2022-6-1",
         },
         m_3: {
           courseId: "c_0",
           taskId: "t_1",
           milestoneName: "Design",
           isCompleted: false,
-          deadline: "2022-06-02",
+          deadline: "2022-6-2",
         },
         m_4: {
           courseId: "c_0",
           taskId: "t_2",
           milestoneName: "Display demo",
           isCompleted: true,
-          deadline: "2022-06-05",
+          deadline: "2022-6-5",
         },
         m_5: {
           courseId: "c_0",
           taskId: "t_2",
           milestoneName: "Display demo",
           isCompleted: true,
-          deadline: "2022-06-07",
+          deadline: "2022-6-7",
         },
       },
       allMilestoneIds: ["m_0", "m_1", "m_2", "m_3", "m_4", "m_5"],
     },
     calendar: {
       byId: {
-        "2022-05-27": {
+        "2022-5-27": {
           byId: {
             c_0: {
               t_0: ["m_0"],
@@ -109,7 +109,7 @@ const initialState = {
           allCourseIds: ["c_0"],
           numOfMilestones: 1,
         },
-        "2022-05-29": {
+        "2022-5-29": {
           byId: {
             c_0: {
               t_0: ["m_1"],
@@ -119,7 +119,7 @@ const initialState = {
           allCourseIds: ["c_0"],
           numOfMilestones: 1,
         },
-        "2022-06-01": {
+        "2022-6-1": {
           byId: {
             c_0: {
               t_1: ["m_2"],
@@ -129,7 +129,7 @@ const initialState = {
           allCourseIds: ["c_0"],
           numOfMilestones: 1,
         },
-        "2022-06-02": {
+        "2022-6-2": {
           byId: {
             c_0: {
               t_0: ["m_3"],
@@ -139,7 +139,7 @@ const initialState = {
           allCourseIds: ["c_0"],
           numOfMilestones: 1,
         },
-        "2022-06-05": {
+        "2022-6-5": {
           byId: {
             c_0: {
               t_2: ["m_4"],
@@ -149,7 +149,7 @@ const initialState = {
           allCourseIds: ["c_0"],
           numOfMilestones: 1,
         },
-        "2022-06-07": {
+        "2022-6-7": {
           byId: {
             c_0: {
               t_0: ["m_5"],
@@ -161,12 +161,12 @@ const initialState = {
         },
       },
       allCalendarDays: [
-        "2022-05-27",
-        "2022-05-29",
-        "2022-06-01",
-        "2022-06-02",
-        "2022-06-05",
-        "2022-06-07",
+        "2022-5-27",
+        "2022-5-29",
+        "2022-6-1",
+        "2022-6-2",
+        "2022-6-5",
+        "2022-6-7",
       ],
     },
   },
@@ -357,12 +357,14 @@ export const courseDataSlice = createSlice({
     },
     editTaskStartTime: (state, action) => {
       const { taskId, newStartDate } = action.payload;
-      state.value.tasks.byId[taskId].taskStartTime = newStartDate;
+      state.value.tasks.byId[taskId].taskStartTime =
+        returnDateStringWithoutMonth(new Date(newStartDate));
       courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editMilestoneEndTime: (state, action) => {
       const { milestoneId, newEndDate } = action.payload;
-      state.value.milestones.byId[milestoneId].deadline = newEndDate;
+      state.value.milestones.byId[milestoneId].deadline =
+        returnDateStringWithoutMonth(new Date(newEndDate));
       courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     bruteForceUpdateOnCalendar: (state, action) => {
@@ -370,6 +372,8 @@ export const courseDataSlice = createSlice({
         byId: {},
         allCalendarDays: [],
       };
+      // const allCalendarDays2 = [];
+
       state.value.milestones.allMilestoneIds.map((e) => {
         if (state.value.milestones.byId[e]) {
           let { courseId, taskId, deadline } = state.value.milestones.byId[e];
@@ -379,6 +383,9 @@ export const courseDataSlice = createSlice({
                 data.byId[deadline].byId[courseId].allTaskIds.includes(taskId)
               ) {
                 data.byId[deadline].byId[courseId][taskId].push(e);
+                // data.byId[deadline].byId[courseId] = {
+
+                // }
               } else {
                 data.byId[deadline].byId[courseId].allTaskIds.push(taskId);
                 data.byId[deadline].byId[courseId][taskId] = [e];
@@ -404,6 +411,7 @@ export const courseDataSlice = createSlice({
           }
         }
       });
+      data.allCalendarDays.sort();
       // console.log(data);
       state.value.calendar = data;
     },

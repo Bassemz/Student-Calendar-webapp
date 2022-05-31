@@ -16,6 +16,7 @@ export default function TaskSwiper() {
   const data = useSelector(
     (state) => state.userCourses.value.calendar.allCalendarDays
   );
+  // console.log(data);
 
   return (
     <HStack w="100%" px="20">
