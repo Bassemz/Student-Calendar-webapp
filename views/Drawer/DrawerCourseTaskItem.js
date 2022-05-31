@@ -65,7 +65,7 @@ function DrawerCourseTaskItem({ taskId }) {
               dispatch(
                 editTaskName({
                   taskId: taskId,
-                  taskName: taskNameInput.current,
+                  taskName: taskNameInput.current.value,
                 })
               );
             }}

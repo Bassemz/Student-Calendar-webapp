@@ -101,57 +101,63 @@ const initialState = {
       byId: {
         "2022-05-27": {
           byId: {
-            m_0: {
-              courseId: "c_0",
-              taskId: "t_0",
+            c_0: {
+              t_0: ["m_0"],
+              allTaskIds: ["t_0"],
             },
           },
-          allMilestoneIds: ["m_0"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
         "2022-05-29": {
           byId: {
-            m_1: {
-              courseId: "c_0",
-              taskId: "t_0",
+            c_0: {
+              t_0: ["m_1"],
+              allTaskIds: ["t_0"],
             },
           },
-          allMilestoneIds: ["m_1"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
         "2022-06-01": {
           byId: {
-            m_2: {
-              courseId: "c_0",
-              taskId: "t_1",
+            c_0: {
+              t_1: ["m_2"],
+              allTaskIds: ["t_1"],
             },
           },
-          allMilestoneIds: ["m_2"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
         "2022-06-02": {
           byId: {
-            m_3: {
-              courseId: "c_0",
-              taskId: "t_1",
+            c_0: {
+              t_0: ["m_3"],
+              allTaskIds: ["t_1"],
             },
           },
-          allMilestoneIds: ["m_3"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
         "2022-06-05": {
           byId: {
-            m_4: {
-              courseId: "c_0",
-              taskId: "t_2",
+            c_0: {
+              t_2: ["m_4"],
+              allTaskIds: ["t_2"],
             },
           },
-          allMilestoneIds: ["m_4"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
         "2022-06-07": {
           byId: {
-            m_5: {
-              courseId: "c_0",
-              taskId: "t_2",
+            c_0: {
+              t_0: ["m_5"],
+              allTaskIds: ["t_2"],
             },
           },
-          allMilestoneIds: ["m_5"],
+          allCourseIds: ["c_0"],
+          numOfMilestones: 1,
         },
       },
       allCalendarDays: [
@@ -187,6 +193,7 @@ export const courseDataSlice = createSlice({
         totalNumberOfMilestones: 0,
         totalNumberOfCompletedMilestones: 0,
       };
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     removeCourse: (state, action) => {
       //   console.log(action.payload);
@@ -220,6 +227,7 @@ export const courseDataSlice = createSlice({
         state.value.courses.allCourseIds.filter((e) => e !== courseId);
       //Delete the course
       delete state.value.courses.byId[courseId];
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     addTasks: (state, action) => {
       const { courseId } = action.payload;
@@ -246,6 +254,7 @@ export const courseDataSlice = createSlice({
           taskId: taskId,
         },
       });
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     removeTask: (state, action) => {
       const { courseId, taskId } = action.payload;
@@ -274,12 +283,14 @@ export const courseDataSlice = createSlice({
       );
       //Delete the tasks using their ids
       delete tasks.byId[taskId];
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editTaskName: (state, action) => {
       const { taskId, taskName } = action.payload;
       //   console.log(courseIndex, taskIndex, taskName.value);
       state.value.tasks.byId[taskId].taskName = taskName;
       //   state.value.data[courseIndex].tasks[taskIndex].taskName = taskName.value;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     markMilestone: (state, action) => {
       const { courseId, taskId, milestoneId, milestoneStatus } = action.payload;
@@ -296,6 +307,7 @@ export const courseDataSlice = createSlice({
         state.value.tasks.byId[taskId].completedMilestones += 1;
       }
       state.value.milestones.byId[milestoneId].isCompleted = milestoneStatus;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     addMilestone: (state, action) => {
       const { courseId, taskId } = action.payload;
@@ -312,6 +324,7 @@ export const courseDataSlice = createSlice({
       };
       state.value.courses.byId[courseId].totalNumberOfMilestones += 1;
       state.value.tasks.byId[taskId].numOfMilestones += 1;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     removeMilestone: (state, action) => {
       const { courseId, taskId, milestoneId, isCompleted } = action.payload;
@@ -330,22 +343,69 @@ export const courseDataSlice = createSlice({
         taskId
       ].milestones.filter((e) => e !== milestoneId);
       delete state.value.milestones.byId[milestoneId];
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editMilestone: (state, action) => {
       const { milestoneId, milestoneName } = action.payload;
       state.value.milestones.byId[milestoneId].milestoneName = milestoneName;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editCourseName: (state, action) => {
       const { courseId, courseName } = action.payload;
       state.value.courses.byId[courseId].courseName = courseName;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editTaskStartTime: (state, action) => {
       const { taskId, newStartDate } = action.payload;
       state.value.tasks.byId[taskId].taskStartTime = newStartDate;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
     },
     editMilestoneEndTime: (state, action) => {
       const { milestoneId, newEndDate } = action.payload;
       state.value.milestones.byId[milestoneId].deadline = newEndDate;
+      courseDataSlice.caseReducers.bruteForceUpdateOnCalendar(state);
+    },
+    bruteForceUpdateOnCalendar: (state, action) => {
+      const data = {
+        byId: {},
+        allCalendarDays: [],
+      };
+      state.value.milestones.allMilestoneIds.map((e) => {
+        if (state.value.milestones.byId[e]) {
+          let { courseId, taskId, deadline } = state.value.milestones.byId[e];
+          if (data.allCalendarDays.includes(deadline)) {
+            if (data.byId[deadline].allCourseIds.includes(courseId)) {
+              if (
+                data.byId[deadline].byId[courseId].allTaskIds.includes(taskId)
+              ) {
+                data.byId[deadline].byId[courseId][taskId].push(e);
+              } else {
+                data.byId[deadline].byId[courseId].allTaskIds.push(taskId);
+                data.byId[deadline].byId[courseId][taskId] = [e];
+              }
+            } else {
+              data.byId[deadline].allCourseIds.push(courseId);
+              data.byId[deadline].byId[courseId] = {
+                [taskId]: [e],
+                allTaskIds: [taskId],
+              };
+            }
+          } else {
+            data.allCalendarDays.push(deadline);
+            data.byId[deadline] = {
+              byId: {
+                [courseId]: {
+                  [taskId]: [e],
+                  allTaskIds: [taskId],
+                },
+              },
+              allCourseIds: [courseId],
+            };
+          }
+        }
+      });
+      // console.log(data);
+      state.value.calendar = data;
     },
   },
 });

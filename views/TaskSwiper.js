@@ -12,12 +12,10 @@ import { HStack } from "@chakra-ui/layout";
 
 import { useSelector } from "react-redux";
 
-const data = [1, 2, 3, 4, 5, 6, 7];
-
 export default function TaskSwiper() {
-  // const data = useSelector(
-  //   (state) => state.userCourses.value.calendarDays.allIds
-  // );
+  const data = useSelector(
+    (state) => state.userCourses.value.calendar.allCalendarDays
+  );
 
   return (
     <HStack w="100%" px="20">

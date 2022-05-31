@@ -1,49 +1,45 @@
 import { VStack, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import CourseCardDetail from "./TaskCardDetails";
+import { returnBeautifulDateStrings } from "../usefulFunctions";
 
-const data = [
-  {
-    name: "CMSE322",
-    tasks: [
-      {
-        name: "SRS report",
-        milestones: ["Write Introduction", "Write REQs"],
-      },
-      {
-        name: "SDS report",
-        milestones: ["Design", "Design", "Design", "Die"],
-      },
-    ],
-  },
-  {
-    name: "CMSE326",
-    tasks: [
-      {
-        name: "Assignment 1",
-        milestones: ["Write test case1"],
-      },
-      {
-        name: "Assignment 2",
-        milestones: ["Test Website1"],
-        milestones: ["Test Website2"],
-        milestones: ["Assess quality"],
-        milestones: ["Compare"],
-        milestones: ["Write result"],
-      },
-    ],
-  },
-];
+// const data = [
+//   {
+//     name: "CMSE322",
+//     tasks: [
+//       {
+//         name: "SRS report",
+//         milestones: ["Write Introduction", "Write REQs"],
+//       },
+//       {
+//         name: "SDS report",
+//         milestones: ["Design", "Design", "Design", "Die"],
+//       },
+//     ],
+//   },
+//   {
+//     name: "CMSE326",
+//     tasks: [
+//       {
+//         name: "Assignment 1",
+//         milestones: ["Write test case1"],
+//       },
+//       {
+//         name: "Assignment 2",
+//         milestones: ["Test Website1"],
+//         milestones: ["Test Website2"],
+//         milestones: ["Assess quality"],
+//         milestones: ["Compare"],
+//         milestones: ["Write result"],
+//       },
+//     ],
+//   },
+// ];
 
 export default function TaskDayCard({ taskDayId }) {
-  // console.log(milestoneId);
-  // const milestoneIds = useSelector(
-  //   (state) =>
-  //     state.userCourses.userCourses.value.calendarDays.byId[taskDayId]
-  //       .allMilestoneIds
-  // );
-  // const
-  // console.log(milestoneIds);
+  const data = useSelector(
+    (state) => state.userCourses.value.calendar.byId[taskDayId].allCourseIds
+  );
 
   return (
     <VStack
@@ -54,14 +50,20 @@ export default function TaskDayCard({ taskDayId }) {
       bg="white"
       alignItems={"left"}
       justifyContent="flex-start"
+      minH="450px"
+      minW="290px"
       maxH={"450px"}
       animation={"ease"}
       className="task-swiper-slide"
     >
-      <Heading size="lg">Tue, 24 May</Heading>
+      <Heading size="lg">
+        {returnBeautifulDateStrings(new Date(taskDayId))}
+      </Heading>
       <VStack w="100%" overflowY="auto">
         {data.map((e, i) => {
-          return <CourseCardDetail key={i} name={e.name} tasks={e.tasks} />;
+          return (
+            <CourseCardDetail key={e} taskDayId={taskDayId} courseId={e} />
+          );
         })}
       </VStack>
     </VStack>

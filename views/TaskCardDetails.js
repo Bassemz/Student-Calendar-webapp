@@ -1,6 +1,16 @@
 import { Heading, VStack, UnorderedList, ListItem } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import TaskDayCardDetailsTasks from "./TaskDayCardDetailsTasks";
 
-export default function TaskCardDetail({ name, tasks }) {
+export default function TaskCardDetail({ taskDayId, courseId }) {
+  const tasks = useSelector(
+    (state) =>
+      state.userCourses.value.calendar.byId[taskDayId].byId[courseId].allTaskIds
+  );
+  const name = useSelector(
+    (state) => state.userCourses.value.courses.byId[courseId].courseName
+  );
+
   return (
     <VStack
       spacing="1.5"
@@ -9,6 +19,7 @@ export default function TaskCardDetail({ name, tasks }) {
       justifyContent={"start"}
       justifyItems="start"
       textAlign={"left"}
+      h="100%"
     >
       <Heading size="md" color={"#2a4ea2"}>
         {name}
@@ -16,24 +27,12 @@ export default function TaskCardDetail({ name, tasks }) {
       <VStack spacing="1" alignItems="left" px={[2, 3, 4, 5]}>
         {tasks.map((e, i) => {
           return (
-            <VStack
-              key={i}
-              id={i}
-              w="100%"
-              justifyContent="start"
-              alignItems="left"
-            >
-              <Heading size="sm">{e.name}</Heading>
-              <UnorderedList spacing="-0.5" px="10">
-                {e.milestones.map((e, i) => {
-                  return (
-                    <ListItem key={i}>
-                      <Heading size="xs">{e}</Heading>
-                    </ListItem>
-                  );
-                })}
-              </UnorderedList>
-            </VStack>
+            <TaskDayCardDetailsTasks
+              key={e}
+              taskDayId={taskDayId}
+              taskId={e}
+              courseId={courseId}
+            />
           );
         })}
       </VStack>
