@@ -76,7 +76,7 @@ const initialState = {
         m_3: {
           courseId: "c_0",
           taskId: "t_1",
-          milestoneName: "Design",
+          milestoneName: "Design more",
           isCompleted: false,
           deadline: "2022-6-2",
         },
@@ -90,7 +90,7 @@ const initialState = {
         m_5: {
           courseId: "c_0",
           taskId: "t_2",
-          milestoneName: "Display demo",
+          milestoneName: "Do something",
           isCompleted: true,
           deadline: "2022-6-7",
         },
@@ -388,10 +388,12 @@ export const courseDataSlice = createSlice({
                 // }
               } else {
                 data.byId[deadline].byId[courseId].allTaskIds.push(taskId);
+                data.byId[deadline].byId[courseId].allTaskIds.sort();
                 data.byId[deadline].byId[courseId][taskId] = [e];
               }
             } else {
               data.byId[deadline].allCourseIds.push(courseId);
+              data.byId[deadline].allCourseIds.sort();
               data.byId[deadline].byId[courseId] = {
                 [taskId]: [e],
                 allTaskIds: [taskId],

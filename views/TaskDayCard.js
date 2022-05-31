@@ -49,7 +49,9 @@ export default function TaskDayCard({ taskDayId }) {
       rounded="md"
       bg="white"
       alignItems={"left"}
-      justifyContent="flex-start"
+      alignContent="left"
+      justifyContent="start"
+      justifyItems={"start"}
       minH="450px"
       minW="290px"
       maxH={"450px"}
@@ -59,7 +61,14 @@ export default function TaskDayCard({ taskDayId }) {
       <Heading size="lg">
         {returnBeautifulDateStrings(new Date(taskDayId))}
       </Heading>
-      <VStack w="100%" overflowY="auto">
+      <VStack
+        w="100%"
+        justifyContent={"left"}
+        justifyItems="left"
+        alignContent="start"
+        alignItems="start"
+        overflowY="auto"
+      >
         {data.map((e, i) => {
           return (
             <CourseCardDetail key={e} taskDayId={taskDayId} courseId={e} />
