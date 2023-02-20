@@ -1,18 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Student Calendar WebApp
 
-## Getting Started
+A Student Calendar web application made using NextJS, Redux and Chakra UI library
+
+## To run the application
 
 First make sure node is installed from the official website: 
 https://nodejs.org/en/
 
-Next, yarn must be installed too by following the instructions at their official website:
-https://classic.yarnpkg.com/lang/en/docs/install/
+Make sure that yarn is installed too.
 
-Now, cd into the project folder and run the following command:
+Clone the repository and run:
+
 ```bash
-yarn dev
+yarn build
+yarn start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then go ahead and open [http://localhost:3000](http://localhost:3000)
 
 
