@@ -52,7 +52,7 @@ export default function DashBoardBody() {
   } ${current.getFullYear()}`;
 
   return (
-    <VStack w="100vw" paddingX={[5, 10, 10, 15]} alignItems="left">
+    <VStack w="100%" paddingX={[5, 10, 10, 15]} alignItems="left">
       <Flex px={4} w="100%" justifyContent="center">
         <Flex align="center" justifyContent="center" gap={3}>
           <Image src="/icon_calender.png" maxH="60px" />
@@ -63,8 +63,7 @@ export default function DashBoardBody() {
       </Flex>
       <VStack
         paddingX={[5, 10, 12, 20]}
-        p=""
-        w="100vw"
+        width="100%"
         alignItems={"left"}
         justifyContent="flex-start"
       >
